@@ -21,7 +21,7 @@ export function fvg(rawQuotes: Chart[], options: FVGOptions = {}): FVGSignal[] {
         slMult = config.FVG_MULTIPLIER_SL,
     } = options;
 
-    const quotes = rawQuotes.slice(-6);
+    const quotes = rawQuotes;
     const atrValues = atr(rawQuotes, atrPeriod);
     const signals: FVGSignal[] = [];
 

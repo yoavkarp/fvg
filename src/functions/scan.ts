@@ -1,3 +1,4 @@
+import { config } from "../config.js";
 import { chartsService } from "../features/charts/charts.service.js";
 import { FVGSignal } from "../features/fvg/fvg.interfaces.js";
 import { fvg } from "../features/fvg/fvg.js";
@@ -33,6 +34,10 @@ export async function scan(options: ScanOptions = {}) {
                 return null;
             }
 
+            if (last_signal.date.getTime() < Date.now() - config.FVG_SIGNAL_DAYS_DIFF * 24 * 60 * 60 * 1000) {
+                return null;
+            }
+
             options?.onSignal?.(t, last_signal);
             return last_signal;
         })));
@@ -40,5 +45,5 @@ export async function scan(options: ScanOptions = {}) {
         signals.push(...res.filter(Boolean) as any);
     }
 
-    return;
+    return signals;
 }

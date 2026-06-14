@@ -1,3 +1,4 @@
+import { config } from "../../config.js";
 import { Chart } from "./charts.interfaces.js";
 import { isRegularMarket, m30toh4 } from "./charts.utils.js";
 import { client } from "./client.js";
@@ -6,7 +7,7 @@ import { GetStocksAggregates200Response, GetStocksAggregatesTimespanEnum } from 
 class ChartsService {
     async get4hChart(symbol: string): Promise<Array<Chart>> {
 
-        const from = new Date(Date.now() - 17 * 24 * 60 * 60 * 1000).toISOString().split("T")[0]
+        const from = new Date(Date.now() - config.CHARTS_PERIOD_DAYS * 24 * 60 * 60 * 1000).toISOString().split("T")[0]
         const charts: Array<Chart> = [];
         const to = new Date().toISOString().split("T")[0];
         const curr = await client.getStocksAggregates(symbol, 30, GetStocksAggregatesTimespanEnum.Minute, from, to, false);

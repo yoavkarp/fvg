@@ -7,6 +7,7 @@ declare namespace NodeJS {
         readonly FVG_MULTIPLIER_TS?: string;
         readonly FVG_MULTIPLIER_TP?: string;
         readonly FVG_MULTIPLIER_SL?: string;
+        readonly FVG_SIGNAL_DAYS_DIFF?: string;
         readonly POLYGON_IO_API_KEY?: string;
         readonly CHARTS_PERIOD_DAYS?: string;
     }
