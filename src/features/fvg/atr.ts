@@ -1,6 +1,6 @@
-import { GetStocksAggregates200ResponseAllOfResultsInner } from "@polygon.io/client-js";
+import { Chart } from "../charts/charts.interfaces.js";
 
-export default function atr(quotes: GetStocksAggregates200ResponseAllOfResultsInner[], period: number): number[] {
+export default function atr(quotes: Chart[], period: number): number[] {
     const n = quotes.length;
     const tr = new Array<number>(n).fill(0);
     const atr = new Array<number>(n).fill(0);

@@ -6,8 +6,8 @@ import { GetStocksAggregates200Response, GetStocksAggregates200ResponseAllOfResu
 class ChartsService {
     async get4hChart(symbol: string): Promise<Array<Chart>> {
 
-        const charts: Array<GetStocksAggregates200ResponseAllOfResultsInner> = [];
-        const from = new Date(Date.now() - 20 * 24 * 60 * 60 * 1000).toISOString().split("T")[0];
+        const from = new Date(Date.now() - 365 * 24 * 60 * 60 * 1000).toISOString().split("T")[0]
+        const charts: Array<Chart> = [];
         const to = new Date().toISOString().split("T")[0];
         const curr = await client.getStocksAggregates(symbol, 30, GetStocksAggregatesTimespanEnum.Minute, from, to, false);
         charts.push(...(curr.results ?? []));

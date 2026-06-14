@@ -1,16 +1,15 @@
-import { GetStocksAggregates200ResponseAllOfResultsInner } from "@polygon.io/client-js";
-import { readFileSync } from 'fs'
-import { cwd } from "process";
-import path from "path";
-import { isRegularMarket, m30toh4, toNyTimes } from "./features/charts/charts.utils.js";
-import { Chart } from "./features/charts/charts.interfaces.js";
-import { chartsService } from "./features/charts/charts.service.js";
+import { config } from "dotenv";
+import { scan } from "./functions/scan.js";
+
+config({ debug: false });
+
 async function main() {
 
-    const tickers = [{ symbol: 'NVDA' }]; //await symbolsService.getAll();
-
-    const charts: Chart[] = await chartsService.get4hChart('NVDA');
-    console.log(charts.map(toNyTimes), charts);
+    scan({
+        onSignal: (ticker, signal) => {
+            console.log(`[${ticker.symbol}] ${signal.type === 'bear' ? 'SHORT' : 'LONG'} @ ${signal.date} ATR:${signal.atr}`)
+        }
+    });
 }
 
 main();

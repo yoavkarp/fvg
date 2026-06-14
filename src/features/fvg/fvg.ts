@@ -1,9 +1,21 @@
-import { GetStocksAggregates200ResponseAllOfResultsInner } from "@polygon.io/client-js";
 import { FVGOptions, FVGSignal } from "./fvg.interfaces.js";
 import atr from "./atr.js";
+import { Chart } from "../charts/charts.interfaces.js";
 
-export function fvg(rawQuotes: GetStocksAggregates200ResponseAllOfResultsInner[], options: FVGOptions = {}): FVGSignal[] {
-    const { filterWidth = 0, atrPeriod = 14, tsReset = 'Every Signals', tsMult = 0 } = options;
+const transformToNumber = (item?: string): number | undefined => {
+    if (!item) return undefined;
+    const res = Number(item);
+    if (isNaN(res)) return undefined;
+    return res;
+}
+
+export function fvg(rawQuotes: Chart[], options: FVGOptions = {}): FVGSignal[] {
+    const {
+        filterWidth = transformToNumber(process.env.FVG_FILTER_WIDTH) ?? 0,
+        atrPeriod = transformToNumber(process.env.FVG_ATR_PERIOD) ?? 14,
+        tsReset = transformToNumber(process.env.FVG_RESET_TS) ?? 'Inverse Signals',
+        tsMult = transformToNumber(process.env.FVG_MULTIPLIER_TS) ?? 0
+    } = options;
 
     const quotes = rawQuotes;
 

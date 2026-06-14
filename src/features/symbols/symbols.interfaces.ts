@@ -11,3 +11,8 @@ export interface WikiApiResponse {
         }[];
     };
 }
+
+export type Ticker = {
+    symbol: string;
+    index: Array<'nasdaq' | 'sp500'>;
+}
