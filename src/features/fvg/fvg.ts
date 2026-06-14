@@ -12,9 +12,9 @@ const transformToNumber = (item?: string): number | undefined => {
 export function fvg(rawQuotes: Chart[], options: FVGOptions = {}): FVGSignal[] {
     const {
         filterWidth = transformToNumber(process.env.FVG_FILTER_WIDTH) ?? 0,
-        atrPeriod = transformToNumber(process.env.FVG_ATR_PERIOD) ?? 14,
-        tsReset = transformToNumber(process.env.FVG_RESET_TS) ?? 'Inverse Signals',
-        tsMult = transformToNumber(process.env.FVG_MULTIPLIER_TS) ?? 0
+        atrPeriod = transformToNumber(process.env.FVG_ATR_PERIOD) ?? 200,
+        tsReset = process.env.FVG_RESET_TS ?? 'Inverse Signals',
+        tsMult = transformToNumber(process.env.FVG_MULTIPLIER_TS) ?? 3
     } = options;
 
     const quotes = rawQuotes;
