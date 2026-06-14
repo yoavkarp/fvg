@@ -3,7 +3,7 @@ import { server } from "./features/server/server.js";
 import { scan } from "./functions/scan.js";
 
 async function main() {
-    server();
+    // server();
 
     scan({
         onSignal: (ticker, signal) => {
