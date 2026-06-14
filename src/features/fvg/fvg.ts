@@ -1,6 +1,7 @@
 import { FVGOptions, FVGSignal } from "./fvg.interfaces.js";
 import atr from "./atr.js";
 import { Chart } from "../charts/charts.interfaces.js";
+import { config } from "../../config.js";
 
 const transformToNumber = (item?: string): number | undefined => {
     if (!item) return undefined;
@@ -10,15 +11,17 @@ const transformToNumber = (item?: string): number | undefined => {
 }
 
 export function fvg(rawQuotes: Chart[], options: FVGOptions = {}): FVGSignal[] {
+
     const {
-        filterWidth = transformToNumber(process.env.FVG_FILTER_WIDTH) ?? 0,
-        atrPeriod = transformToNumber(process.env.FVG_ATR_PERIOD) ?? 200,
-        tsReset = process.env.FVG_RESET_TS ?? 'Inverse Signals',
-        tsMult = transformToNumber(process.env.FVG_MULTIPLIER_TS) ?? 3
+        filterWidth = config.FVG_FILTER_WIDTH,
+        atrPeriod = config.FVG_ATR_PERIOD,
+        tsReset = config.FVG_RESET_TS,
+        tsMult = config.FVG_MULTIPLIER_TS,
+        tpMult = config.FVG_MULTIPLIER_TP,
+        slMult = config.FVG_MULTIPLIER_SL,
     } = options;
 
-    const quotes = rawQuotes;
-
+    const quotes = rawQuotes.slice(-6);
     const atrValues = atr(rawQuotes, atrPeriod);
     const signals: FVGSignal[] = [];
 
@@ -60,30 +63,36 @@ export function fvg(rawQuotes: Chart[], options: FVGOptions = {}): FVGSignal[] {
         }
 
         if (bull) {
+            const avg = (low3 + high1) / 2;
             signals.push({
                 type: 'bull',
                 date: new Date(quotes[i].t),
                 barIndex: i,
                 bottom: high1,
                 top: low3,
-                avg: (low3 + high1) / 2,
+                avg,
                 atr: atrVal,
                 trailingStop: ts,
                 tsReached,
+                takeProfit: avg + atrVal * tpMult,
+                stopLoss: avg - atrVal * slMult,
             });
         }
 
         if (bear) {
+            const avg = (low1 + high3) / 2;
             signals.push({
                 type: 'bear',
                 date: new Date(quotes[i].t),
                 barIndex: i,
                 bottom: high3,
                 top: low1,
-                avg: (low1 + high3) / 2,
+                avg,
                 atr: atrVal,
                 trailingStop: ts,
                 tsReached,
+                takeProfit: avg - atrVal * tpMult,
+                stopLoss: avg + atrVal * slMult,
             });
         }
     }

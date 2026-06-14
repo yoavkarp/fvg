@@ -9,6 +9,8 @@ export interface FVGSignal {
     atr: number;
     trailingStop: number;
     tsReached: boolean;
+    takeProfit: number;
+    stopLoss: number;
 }
 
 export interface FVGOptions {
@@ -16,4 +18,6 @@ export interface FVGOptions {
     atrPeriod?: number;
     tsReset?: 'Every Signals' | 'Inverse Signals';
     tsMult?: number;
+    tpMult?: number;
+    slMult?: number;
 }

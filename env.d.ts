@@ -3,8 +3,11 @@ declare namespace NodeJS {
         readonly NODE_ENV: 'development' | 'production' | 'test';
         readonly FVG_FILTER_WIDTH?: string;
         readonly FVG_ATR_PERIOD?: string;
-        readonly FVG_RESET_TS?: "Inverse Signals" | "Every Signals";
+        readonly FVG_RESET_TS?: string;
         readonly FVG_MULTIPLIER_TS?: string;
+        readonly FVG_MULTIPLIER_TP?: string;
+        readonly FVG_MULTIPLIER_SL?: string;
         readonly POLYGON_IO_API_KEY?: string;
+        readonly CHARTS_PERIOD_DAYS?: string;
     }
 }
