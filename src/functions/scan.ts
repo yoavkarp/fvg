@@ -7,6 +7,7 @@ import { symbolsService } from "../features/symbols/symbols.service.js";
 
 interface ScanOptions {
     onSignal?: (ticker: Ticker, signal: FVGSignal) => void;
+    onNoSignalFound?: (ticker: Ticker) => void;
     concurrent?: boolean
 }
 
@@ -31,10 +32,12 @@ export async function scan(options: ScanOptions = {}) {
             const signals = fvg(c);
             const last_signal = signals.at(-1);
             if (!last_signal) {
+                options.onNoSignalFound?.(t);
                 return null;
             }
 
             if (last_signal.date.getTime() < Date.now() - config.FVG_SIGNAL_DAYS_DIFF * 24 * 60 * 60 * 1000) {
+                options.onNoSignalFound?.(t);
                 return null;
             }
 
