@@ -20,3 +20,4 @@ jobs:
             cd ~/fvg
             git pull origin main
             sudo docker compose up --build -d
+            docker network connect app-network fvg-server
