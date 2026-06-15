@@ -18,4 +18,4 @@ jobs:
           script: |
             cd ~/fvg
             git pull origin main
-            npm start
+            docker compose up --build -d

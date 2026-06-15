@@ -1,0 +1,12 @@
+services:
+  fvg:
+    build: .
+    container_name: fvg-server
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    volumes:
+      # Persist the signals store across container restarts
+      - ./db.json:/app/db.json
