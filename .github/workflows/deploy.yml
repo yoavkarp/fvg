@@ -16,6 +16,6 @@ jobs:
           username: ${{ secrets.OCI_USER }}
           key: ${{ secrets.OCI_SSH_KEY }}
           script: |
-            cd /path/to/your/project
+            cd ~/fvg
             git pull origin main
             npm start
