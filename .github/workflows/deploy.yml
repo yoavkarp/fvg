@@ -16,6 +16,7 @@ jobs:
           username: ${{ secrets.OCI_USER }}
           key: ${{ secrets.OCI_SSH_KEY }}
           script: |
+            sudo systemctl start docker || true
             cd ~/fvg
             git pull origin main
             docker compose up --build -d
