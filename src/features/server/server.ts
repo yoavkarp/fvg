@@ -46,7 +46,7 @@ export function server() {
         res.json({ success: true })
     })
 
-    server.use('/api', apiRoute);
+    server.use('/', apiRoute);
 
     server.listen(3001, () => {
         console.log("Server started");
