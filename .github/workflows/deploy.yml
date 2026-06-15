@@ -19,4 +19,4 @@ jobs:
             sudo systemctl start docker || true
             cd ~/fvg
             git pull origin main
-            docker compose up --build -d
+            sudo docker compose up --build -d
